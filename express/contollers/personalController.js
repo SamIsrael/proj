@@ -6,21 +6,25 @@ const fs = require('fs');
 const personalFile = "./data/personalDetails.json";
 
 const addStudent = (req, res) => {
-    fs.readFile(personalFile, "utf-8", (err, data) => {
-        if (err) console.log(err);
+    try {
+        fs.readFile(personalFile, "utf-8", (err, data) => {
+            if (err) res.status(500).json({ "error": err.message });
 
-        let existingStudent = JSON.parse(data);
-        let newStudent = req.body;
-        existingStudent.push(newStudent);
-        console.log("existingStudent");
+            let existingStudent = JSON.parse(data);
+            let newStudent = req.body;
+            existingStudent.push(newStudent);
+            console.log(existingStudent);
 
-        fs.writeFile(personalFile, JSON.stringify(existingStudent), (err) => {
-            if (err) console.log(err);
-            res.send(existingStudent);
-        });
+            fs.writeFile(personalFile, JSON.stringify(existingStudent), (err) => {
+                if (err) console.log(err);
+                res.status(200).json(existingStudent);
+            });
 
 
-    })
+        })
+    } catch (err) {
+        res.status(500).json({ "error": err.message });
+    }
 }
 
 const deleteStudent = (req, res) => {
@@ -64,7 +68,7 @@ const getSingleStudent = (req, res) => {
             let student = existingStudent.filter(v => v.id == studentid)
 
             if (student.length > 0) {
-                res.status().JSON(existingStudent);
+                res.status(200).json(student);
             } else {
                 console.log("No student found;");
             }

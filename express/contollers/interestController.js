@@ -1,10 +1,10 @@
 const fs = require('fs');
 
-const personalityFile = "./data/personalityAssessment.json";
+const interestFile = "./data/interestAssessment.json";
 
 const addQuestion = (req, res) => {
     try {
-        fs.readFile(personalityFile, "utf-8", (err, data) => {
+        fs.readFile(interestFile, "utf-8", (err, data) => {
             if (err) res.status(500).json({ "error": err.message });
 
             let existingQuestion = JSON.parse(data);
@@ -12,7 +12,7 @@ const addQuestion = (req, res) => {
             existingQuestion.push(newQuestion);
             console.log("existingQuestion");
 
-            fs.writeFile(personalityFile, JSON.stringify(existingQuestion), (err) => {
+            fs.writeFile(interestFile, JSON.stringify(existingQuestion), (err) => {
                 if (err) console.log(err);
                 res.status(200).json(existingQuestion);
             });
@@ -42,7 +42,7 @@ const updateQuestion = (req, res) => {
 
 const getAllQuestions = (req, res) => {
     try {
-        fs.readFile(personalityFile, "utf-8", (err, data) => {
+        fs.readFile(interestFile, "utf-8", (err, data) => {
             if (err) res.status(500).json({ "error": err.message });
 
             let existingQuestion = JSON.parse(data);
@@ -55,7 +55,7 @@ const getAllQuestions = (req, res) => {
 
 const getSingleQuestion = (req, res) => {
     try {
-        fs.readFile(personalityFile, "utf-8", (err, data) => {
+        fs.readFile(interestFile, "utf-8", (err, data) => {
 
             let existingQuestion = JSON.parse(data);
             let questionid = req.params.id;

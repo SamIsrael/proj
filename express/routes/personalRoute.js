@@ -5,9 +5,9 @@ const router = express.Router();
 
 
 
-router.get("/addStudent", addStudent);
-router.get("/deleteStudent", deleteStudent);
-router.get("/updateStudent", updateStudent);
+router.post("/addStudent", addStudent);
+router.delete("/deleteStudent", deleteStudent);
+router.put("/updateStudent", updateStudent);
 router.get("/getAllStudents", getAllStudents);
 router.get("/getSingleStudent/:id", getSingleStudent);
 
